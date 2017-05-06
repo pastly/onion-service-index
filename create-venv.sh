@@ -6,7 +6,7 @@ then
 	echo deleting it before running this script again.
 	exit 1
 fi
-virtualenv-3 $VENV
+virtualenv $VENV
 pip3 install flask
 echo execute \"source $VENV/bin/activate\" to enter virtual environment
 echo execute \"deactivate\" to exit virtual environment

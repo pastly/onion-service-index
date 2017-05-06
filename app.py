@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
 from flask import Flask
-from flask import abort, redirect, render_template, request
+from flask import abort, make_response, redirect, render_template, request
 
 app = Flask(__name__)
 
@@ -32,7 +32,7 @@ def get_page_nav(current_page):
         end = int(num_onions / page_length)
     return [ i for i in range(start, end+1) ]
 
-def gen_page(page=1):
+def gen_page(page=1, do_cache=True):
     if page < 1: page = 1
     if page > num_onions / page_length:
         page = int(num_onions / page_length)
@@ -41,6 +41,10 @@ def gen_page(page=1):
     onions = [ num_to_base(o, 32, 16) for o in range(start, end) ]
     onions = [ translate_with_lookup(o, base32_chars) for o in onions]
     nav = get_page_nav(page)
+    resp = make_response(render_template('index.html.j2',
+        onions=onions, page=page, nav=nav))
+    if do_cache: resp.headers['Cache-Control'] = 'max-age=600'
+    return resp
     return render_template('index.html.j2', onions=onions,
         page=page, nav=nav)
 
@@ -60,7 +64,7 @@ def random_():
     max_page = int(num_onions / page_length)
     page = int(random.uniform(min_page, max_page))
     return redirect("?page={}".format(page), code=302)
-    return gen_page(page)
+    return gen_page(page, do_cache=False)
 
 if __name__ == '__main__':
     app.debug = True
