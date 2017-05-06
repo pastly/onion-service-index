@@ -67,7 +67,7 @@ def random_():
     return gen_page(page, do_cache=False)
 
 if __name__ == '__main__':
-    app.debug = True
+    #app.debug = True
     app.jinja_env.globals['app_name'] = 'All Onion Services'
     app.jinja_env.globals['num_onions'] = format(num_onions, ',')
     app.jinja_env.globals['last_page'] = int(num_onions / page_length)

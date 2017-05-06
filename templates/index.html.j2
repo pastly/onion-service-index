@@ -6,6 +6,7 @@
 	<title>{{ app_name }}</title>
 </head>
 <body>
+<h1><a href='?page=1'>The</a> longest and least useful onion index in the galaxy</h1>
 <p id='about'>
 This website lists <em>literally</em> every onion service.
 If you're looking for a complete index,
@@ -19,43 +20,6 @@ it doesn't get any more complete than this.
 <li>And here and there, you'll find onion services that are actually online
 right now.
 </ul>
-
-<h1>Long lists are dumb</h1>
-<p>
-We think the race to see who can generate the longest list of onion services is
-silly, so we made the longest possible.
-Lists are only useful if they are maintained and curated. Most lists out there
-are not.
-</p>
-
-<h1>There aren't many onion services</h1>
-<p>
-The truth of the matter is <em>there isn't very many online onion services</em>.
-Of those that are online, most aren't worth visiting.
-They're scams, phising attempts, or low-traffic forums that are going to stop
-existing after a week.
-You should very quickly realize this after using a "real" index or search
-engine.
-No, your inability to find awesome sercrets or spooky media is
-<strong>not</strong> because you haven't found the right index/search engine.
-<strong>It's because that stuff isn't there</strong>.
-At least not on the "deep web."
-</p>
-
-<h1>Please feed this website to crawlers</h1>
-<p>If you have permission.</p>
-<p>
-Many of the indexes out there are written as a little side hobby project.
-They sometimes use crawlers to find additional links and to check if onion
-services are still online periodically.
-I don't necessarily think there's much harm in these side projects.
-But sometimes I don't think the crawlers are that well-written.
-I have a hunch that some of them out there would choke if given a ton of new
-unique domains.
-So if you want to stress test your crawler, feel free to point it at this
-website.
-</p>
-
 <p id='nav'>
 	Navigation<br/>
 	<a href='random'>Random</a>
@@ -75,5 +39,93 @@ website.
 		<a href='http://{{ o }}.onion'>{{ o }}.onion</a><br/>
 	{% endfor %}
 </p>
+
+<div id='about'>
+
+<h2>Long lists are dumb</h2>
+<p>
+We think the race to see who can generate the longest list of onion services is
+silly, so we made the longest possible. We win. Everyone can stop now.
+</p>
+<p>
+Lists are only useful if they are maintained and curated. Most lists out there
+are neither. Therefore they are only marginally more useful than this one.
+</p>
+
+<h2>There aren't many onion services</h2>
+<p>
+The truth of the matter is <em>there isn't very many online onion services</em>.
+Of those that are online, most aren't worth visiting.
+They're scams, phising attempts, or low-traffic forums that are going to stop
+existing after a week.
+You should very quickly realize this after using a "real" index or search
+engine.
+No, your inability to find awesome sercrets or spooky media is
+<strong>not</strong> because you haven't found the right index/search engine.
+<strong>It's because that stuff isn't there</strong>.
+At least not on the "deep web."
+</p>
+
+<h2>Please feed this website to crawlers</h2>
+<p>If you have permission.</p>
+<p>
+Many of the indexes out there are written as a little side hobby project.
+They sometimes use crawlers to find additional links and to check if onion
+services are still online periodically.
+I don't necessarily think there's much harm in these side projects.
+But sometimes I don't think the crawlers are that well-written.
+I have a hunch that some of them out there would choke if given a ton of new
+unique domains.
+So if you want to stress test your crawler, feel free to point it at this
+website.
+</p>
+
+</div> <!-- about -->
+
+<div id='faq'>
+<h2>FAQ</h2>
+
+<h3>How long did this take to make?</h3>
+<p>Just one afternoon.</p>
+
+<h3>Does this take a lot of disk space?</h3>
+<p>No. I generate pages as necessary. I cache them too. And no, it should be
+impossible for you to make my server run out of disk space.</p>
+
+<h3>This index sucks</h3>
+<p>Yup. And that's not a question.</p>
+
+<h3>Where can I actually find links?</h3>
+<p>I think <a href='https://ahmia.fi'>Ahmia</a> is the most likely search engine
+to stick around. I like the way
+<a href='http://zlal32teyptf4tvi.onion'>Fresh Onions</a> looks.</p>
+
+<h3>I can't find any interesting links</h3>
+<p>Maybe because there isn't anything interesting to find. And that's also not a
+question.</p>
+
+<h3>Well actually [something about next generation onion services]</h3>
+<p>You're right! This index doesn't include any of the next generation of onion
+services! As of May 2017, the naming scheme hasn't been finalized. It's kind
+of hard to index something that (i) doesn't exist yet, and (ii) doesn't have a
+naming scheme set in stone yet.</p>
+
+<h3>Can't I make foo.xyz.onion and bar.xyz.onion? They don't show up on
+this list.</h3>
+<p>Sure. If you own xyz.onion and figure out how to host different websites at
+subdomains of xyz.onion, that's pretty cool I suppose. But here's why I don't
+think that makes this any less of a complete list.</p>
+<p>An "onion service" isn't necessarily a website. If we decide to define it as
+"a name that connects you to a specific Tor client," then foo.xyz.onion and
+bar.xyz.onion are the same onion service. They are both going to the Tor client
+serving xyz.onion.</p>
+<p>Tor doesn't handle subdomains like that. If you go through the process of
+hosting two websites at the same onion domain, you'll realize you have to do it
+at the level of the webserver. Tor ignores subdomains.</p>
+
+<h3>Has anybody actually asked you any of these questions?</h3>
+<p>I don't think so.</p>
+
+</div> <!-- FAQ -->
 </body>
 </html>

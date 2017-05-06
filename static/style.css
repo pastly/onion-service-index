@@ -1,7 +1,7 @@
 body {
 	background-color: #ddd;
 	color: #022;
-	max-width: 800px;
+	max-width: 1000px;
 	margin: auto;
 }
 
@@ -11,4 +11,8 @@ a {
 
 p#link_list {
 	font-family: monospace;
+}
+
+div#faq, div#about {
+	border-top: 1px solid black;
 }
