@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="/static/style.css" />
+	<link rel="shortcut icon" href="/static/favicon.png" />
+	<title>{{ app_name }}</title>
+</head>
+<body>
+<p id='about'>
+This website lists <em>literally</em> every onion service.
+If you're looking for a complete index,
+it doesn't get any more complete than this.
+<ul>
+<li>We list all {{ num_onions }} onions.
+<li>We list onions that used to be online.
+<li>We list onions that are not online yet.
+<li>We list onions that are impossible to access without
+<a href='https://matt.traudt.xyz/p/GmiiUPQL.html'>the proper authorization</a>.
+<li>And here and there, you'll find onion services that are actually online
+right now.
+</ul>
+
+<h1>Long lists are dumb</h1>
+<p>
+We think the race to see who can generate the longest list of onion services is
+silly, so we made the longest possible.
+Lists are only useful if they are maintained and curated. Most lists out there
+are not.
+</p>
+
+<h1>There aren't many onion services</h1>
+<p>
+The truth of the matter is <em>there isn't very many online onion services</em>.
+Of those that are online, most aren't worth visiting.
+They're scams, phising attempts, or low-traffic forums that are going to stop
+existing after a week.
+You should very quickly realize this after using a "real" index or search
+engine.
+No, your inability to find awesome sercrets or spooky media is
+<strong>not</strong> because you haven't found the right index/search engine.
+<strong>It's because that stuff isn't there</strong>.
+At least not on the "deep web."
+</p>
+
+<h1>Please feed this website to crawlers</h1>
+<p>If you have permission.</p>
+<p>
+Many of the indexes out there are written as a little side hobby project.
+They sometimes use crawlers to find additional links and to check if onion
+services are still online periodically.
+I don't necessarily think there's much harm in these side projects.
+But sometimes I don't think the crawlers are that well-written.
+I have a hunch that some of them out there would choke if given a ton of new
+unique domains.
+So if you want to stress test your crawler, feel free to point it at this
+website.
+</p>
+
+<p id='nav'>
+	Navigation<br/>
+	<a href='random'>Random</a>
+	<a href='?page=1'>First</a>
+	<a href='?page={{ last_page }}'>Last</a>
+	<br/>
+	{% for n in nav %}
+		{% if n is equalto page %}
+			{{ n|string|truncate(9) }}
+		{% else %}
+			<a href='?page={{ n }}' title='{{ n }}'>{{ n|string|truncate(9) }}</a>
+		{% endif %}
+	{% endfor %}
+</p>
+<p id='link_list'>
+	{% for o in onions %}
+		<a href='http://{{ o }}.onion'>{{ o }}.onion</a><br/>
+	{% endfor %}
+</p>
+</body>
+</html>

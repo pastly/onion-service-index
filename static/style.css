@@ -1,0 +1,14 @@
+body {
+	background-color: #ddd;
+	color: #022;
+	max-width: 800px;
+	margin: auto;
+}
+
+a {
+	color: #00d;
+}
+
+p#link_list {
+	font-family: monospace;
+}
