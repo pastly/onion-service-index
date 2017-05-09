@@ -45,8 +45,6 @@ def gen_page(page=1, do_cache=True):
         onions=onions, page=page, nav=nav))
     if do_cache: resp.headers['Cache-Control'] = 'max-age=600'
     return resp
-    return render_template('index.html.j2', onions=onions,
-        page=page, nav=nav)
 
 @app.route('/', methods=['GET'])
 def index_():
@@ -62,9 +60,8 @@ def random_():
     if request.method != 'GET': abort(405)
     min_page = 1
     max_page = int(num_onions / page_length)
-    page = int(random.uniform(min_page, max_page))
+    page = random.randint(min_page, max_page)
     return redirect("?page={}".format(page), code=302)
-    return gen_page(page, do_cache=False)
 
 if __name__ == '__main__':
     #app.debug = True
