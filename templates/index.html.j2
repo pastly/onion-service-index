@@ -9,7 +9,7 @@
 <body>
 {% set v3 = 'v3' in request.args %}
 {% set num_onions = num_onions[v3] %}
-<h1><a href='{{ get_page_url() }}'>The</a> longest and least useful onion index in the galaxy</h1>
+<h1><a href='{{ get_page_url(v3=v3) }}'>The</a> longest and least useful onion index in the galaxy</h1>
 <p id='about'>
 This website lists <em>literally</em> every onion service.
 If you're looking for a complete index,
@@ -27,9 +27,9 @@ right now.
 </ul>
 <p id='nav'>
 	<strong>Navigation</strong><br/>
-	{% set random = '/random' + '&amp;v3' if v3 else '' %}
+	{% set random = '/random' + ('&amp;v3' if v3 else '') %}
 	<a href='{{ random }}'>Random</a>
-	<a href='{{ get_page_url(1, v3) }}'>First</a>
+	<a href='{{ get_page_url(v3=v3) }}'>First</a>
 	<a href='{{ get_page_url(num_onions // page_length, v3) }}'>Last</a>
 	<br/>
 	{% for n in nav %}

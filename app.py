@@ -10,7 +10,7 @@ PAGE_LENGTH = 128
 NUM_ONIONS = 32**16, 32**56
 ONION_LENGTH = 16, 56
 
-app.debug = False
+app.debug = True
 app.jinja_env.globals.update({
 	'app_name': 'All Onion Services',
 	'num_onions': NUM_ONIONS,
@@ -31,7 +31,7 @@ def translate_with_lookup(digits, lookup):
 	return ''.join([ lookup[d] for d in digits])
 
 def get_page_url(page=1, v3=False):
-	return '?page=%s' % page + '&amp;v3' if v3 else ''
+	return '?page=%s' % page + ('&amp;v3' if v3 else '')
 
 app.jinja_env.globals['get_page_url'] = get_page_url
 
