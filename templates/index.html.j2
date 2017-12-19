@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8" />
 	<link rel="stylesheet" href="/static/style.css" />
 	<link rel="shortcut icon" href="/static/favicon.png" />
 	<title>{{ app_name }}</title>
 </head>
 <body>
-<h1><a href='?page=1'>The</a> longest and least useful onion index in the galaxy</h1>
+{% set v3 = 'v3' in request.args %}
+{% set num_onions = num_onions[v3] %}
+<h1><a href='{{ get_page_url() }}'>The</a> longest and least useful onion index in the galaxy</h1>
 <p id='about'>
 This website lists <em>literally</em> every onion service.
 If you're looking for a complete index,
 it doesn't get any more complete than this.
 <ul>
+<li>We list <a href="/">v2 onions.</a>
+<li>We list <a href="/?v3">v3 onions.</a>
 <li>We list all {{ num_onions }} onions.
 <li>We list onions that used to be online.
 <li>We list onions that are not online yet.
 <li>We list onions that are impossible to access without
-<a href='https://matt.traudt.xyz/p/GmiiUPQL.html'>the proper authorization</a>.
+<a href="https://matt.traudt.xyz/p/GmiiUPQL.html">the proper authorization</a>.
 <li>And here and there, you'll find onion services that are actually online
 right now.
 </ul>
 <p id='nav'>
 	<strong>Navigation</strong><br/>
-	<a href='random'>Random</a>
-	<a href='?page=1'>First</a>
-	<a href='?page={{ last_page }}'>Last</a>
+	{% set random = '/random' + '&amp;v3' if v3 else '' %}
+	<a href='{{ random }}'>Random</a>
+	<a href='{{ get_page_url(1, v3) }}'>First</a>
+	<a href='{{ get_page_url(num_onions // page_length, v3) }}'>Last</a>
 	<br/>
 	{% for n in nav %}
+		{% set page = n|string|truncate(9) %}
 		{% if n is equalto page %}
-			{{ n|string|truncate(9) }}
+			{{ page }}
 		{% else %}
-			<a href='?page={{ n }}' title='{{ n }}'>{{ n|string|truncate(9) }}</a>
+			<a href="{{ get_page_url(n, v3) }}" title='{{ n }}'>{{ page }}</a>
 		{% endif %}
 	{% endfor %}
 </p>
@@ -56,11 +63,11 @@ are neither. Therefore they are only marginally more useful than this one.
 <p>
 The truth of the matter is <em>there isn't very many online onion services</em>.
 Of those that are online, most aren't worth visiting.
-They're scams, phising attempts, or low-traffic forums that are going to stop
+They're scams, phishing attempts, or low-traffic forums that are going to stop
 existing after a week.
 You should very quickly realize this after using a "real" index or search
 engine.
-No, your inability to find awesome sercrets or spooky media is
+No, your inability to find awesome secrets or spooky media is
 <strong>not</strong> because you haven't found the right index/search engine.
 <strong>It's because that stuff isn't there</strong>.
 At least not on the "deep web."
@@ -103,12 +110,6 @@ to stick around. I like the way
 <h3>I can't find any interesting links</h3>
 <p>Maybe because there isn't anything interesting to find. And that's also not a
 question.</p>
-
-<h3>Well actually [something about next generation onion services]</h3>
-<p>You're right! This index doesn't include any of the next generation of onion
-services! As of May 2017, the naming scheme hasn't been finalized. It's kind
-of hard to index something that (i) doesn't exist yet, and (ii) doesn't have a
-naming scheme set in stone yet.</p>
 
 <h3>Can't I make foo.xyz.onion and bar.xyz.onion? They don't show up on
 this list.</h3>
