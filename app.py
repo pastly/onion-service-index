@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128
-NUM_ONIONS = 32**16, 32**56
+NUM_ONIONS = 32**16, 32**55
 ONION_LENGTH = 16, 56
 
 app.debug = False
@@ -54,7 +54,7 @@ def gen_page(page=1, v3=False, do_cache=True):
 	start = (page - 1) * PAGE_LENGTH
 	end = page * PAGE_LENGTH
 	onions = [ num_to_base(o, 32, onion_length) for o in range(start, end) ]
-	onions = [ translate_with_lookup(o, BASE32_CHARS) for o in onions ]
+	onions = [ translate_with_lookup(o, BASE32_CHARS) + 'd' for o in onions ]
 	nav = get_page_nav(page, v3)
 	resp = make_response(render_template('index.html.j2',
 		onions=onions, page=page, nav=nav))
