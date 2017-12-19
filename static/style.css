@@ -5,6 +5,11 @@ body {
 	margin: auto;
 }
 
+li {
+	/* the number of v3 onions is so long that it wraps! */
+	white-space: nowrap;	
+}
+
 a {
 	color: #00d;
 }
