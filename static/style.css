@@ -7,7 +7,7 @@ body {
 
 li {
 	/* the number of v3 onions is so long that it wraps! */
-	white-space: nowrap;	
+	white-space: nowrap;
 }
 
 a {

@@ -10,7 +10,7 @@ PAGE_LENGTH = 128
 NUM_ONIONS = 32**16, 32**56
 ONION_LENGTH = 16, 56
 
-app.debug = True
+app.debug = False
 app.jinja_env.globals.update({
 	'app_name': 'All Onion Services',
 	'num_onions': NUM_ONIONS,
