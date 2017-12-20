@@ -27,7 +27,7 @@ right now.
 </ul>
 <p id='nav'>
 	<strong>Navigation</strong><br/>
-	{% set random = '/random' + ('&amp;v3' if v3 else '') %}
+	{% set random = '/random' + ('?v3' if v3 else '') %}
 	<a href='{{ random }}'>Random</a>
 	<a href='{{ get_page_url(v3=v3) }}'>First</a>
 	<a href='{{ get_page_url(num_onions // page_length, v3) }}'>Last</a>
