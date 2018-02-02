@@ -7,7 +7,7 @@ then
 	exit 1
 fi
 virtualenv $VENV
-pip3 install flask
+pip3 install flask ed25519
 echo execute \"source $VENV/bin/activate\" to enter virtual environment
 echo execute \"deactivate\" to exit virtual environment
 
