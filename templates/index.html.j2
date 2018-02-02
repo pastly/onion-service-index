@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8" />
 	<link rel="stylesheet" href="/static/style.css" />
 	<link rel="shortcut icon" href="/static/favicon.png" />
 	<title>{{ app_name }}</title>
 </head>
 <body>
-<h1><a href='?page=1'>The</a> longest and least useful onion index in the galaxy</h1>
+{% set v3 = 'v3' in request.args %}
+{% set num_onions = num_onions[v3] %}
+<h1><a href='{{ get_page_url(v3=v3) }}'>The</a> longest and least useful onion index in the galaxy</h1>
 <p id='about'>
 This website lists <em>literally</em> every onion service.
 If you're looking for a complete index,
 it doesn't get any more complete than this.
 <ul>
-<li>We list all {{ num_onions }} onions.
+<li>We list <a href="/">v2 onions.</a>
+<li>We list <a href="/?v3">v3 onions.</a>
+<li>We list all {{ num_onions }} {{ 'v3' if v3 else 'v2' }} onions.
 <li>We list onions that used to be online.
 <li>We list onions that are not online yet.
 <li>We list onions that are impossible to access without
-<a href='https://matt.traudt.xyz/p/GmiiUPQL.html'>the proper authorization</a>.
+<a href="http://mattttttssi4lhud.onion/p/GmiiUPQL.html">the proper authorization</a>.
 <li>And here and there, you'll find onion services that are actually online
 right now.
 </ul>
 <p id='nav'>
 	<strong>Navigation</strong><br/>
-	<a href='random'>Random</a>
-	<a href='?page=1'>First</a>
-	<a href='?page={{ last_page }}'>Last</a>
+	<strong>Now viewing page {{ page }}</strong><br/>
+	{% set random = '/random' + ('?v3' if v3 else '') %}
+	<a href='{{ random }}'>Random</a>
+	<a href='{{ get_page_url(v3=v3) }}'>First</a>
+	<a href='{{ get_page_url(num_onions // page_length, v3) }}'>Last</a>
 	<br/>
 	{% for n in nav %}
+		{% set page = n|string|truncate(9) %}
 		{% if n is equalto page %}
-			{{ n|string|truncate(9) }}
+			{{ page }}
 		{% else %}
-			<a href='?page={{ n }}' title='{{ n }}'>{{ n|string|truncate(9) }}</a>
+			<a href="{{ get_page_url(n, v3) }}" title='{{ n }}'>{{ page }}</a>
 		{% endif %}
 	{% endfor %}
 </p>
@@ -56,11 +64,11 @@ are neither. Therefore they are only marginally more useful than this one.
 <p>
 The truth of the matter is <em>there isn't very many online onion services</em>.
 Of those that are online, most aren't worth visiting.
-They're scams, phising attempts, or low-traffic forums that are going to stop
+They're scams, phishing attempts, or low-traffic forums that are going to stop
 existing after a week.
 You should very quickly realize this after using a "real" index or search
 engine.
-No, your inability to find awesome sercrets or spooky media is
+No, your inability to find awesome secrets or spooky media is
 <strong>not</strong> because you haven't found the right index/search engine.
 <strong>It's because that stuff isn't there</strong>.
 At least not on the "deep web."
@@ -112,7 +120,12 @@ along with this program. If not, see
 <h2>FAQ</h2>
 
 <h3>How long did this take to make?</h3>
-<p>Just one afternoon, or two if you count Ben Mintz's contribution.</p>
+<p>In afternoons:</p>
+<ul>Matt - 3 afternoons</ul>
+<ul>Ben - 1 afternoon</ul>
+
+(The vast majority of that time was spent learning how to generate valid v3
+onion services).
 
 <h3>Does this take a lot of disk space?</h3>
 <p>No. I generate pages as necessary. I cache them too. And no, it should be
@@ -130,12 +143,6 @@ to stick around. I like the way
 <p>Maybe because there isn't anything interesting to find. And that's also not a
 question.</p>
 
-<h3>Well actually [something about next generation onion services]</h3>
-<p>You're right! This index doesn't include any of the next generation of onion
-services! As of May 2017, the naming scheme hasn't been finalized. It's kind
-of hard to index something that (i) doesn't exist yet, and (ii) doesn't have a
-naming scheme set in stone yet.</p>
-
 <h3>Can't I make foo.xyz.onion and bar.xyz.onion? They don't show up on
 this list.</h3>
 <p>Sure. If you own xyz.onion and figure out how to host different websites at
@@ -148,6 +155,29 @@ serving xyz.onion.</p>
 <p>Tor doesn't handle subdomains like that. If you go through the process of
 hosting two websites at the same onion domain, you'll realize you have to do it
 at the level of the webserver. Tor ignores subdomains.</p>
+
+<h3>Why do v2 onion addresses start with 'a' and not '2'?</h3>
+<p>Because onion addresses are encoded with base32 and the official base32
+alphabet
+<a href='https://en.wikipedia.org/wiki/Base32#RFC_4648_Base32_alphabet'>starts
+at 'a'</a>. All them other onion indexes are doing it wrong!</p>
+
+<h3>Why aren't the v3 onion addresses in order?</h3>
+<p>Actually, they are.</p>
+
+<p>To generate the v3 onion addresses, we do Real Crypto™. The addresses are
+ordered by their private keys, starting at 0.</p>
+
+<p>While v2 onion addresses are just a hash and therefore all combinations of
+16 base32 characters are valid addresses, this isn't true for v3 onion
+addresses. Put simply, a v3 onion address is (1) a 32-byte (not bit) public
+key, (2) a checksum, and (3) a version all encoded together (in that order) in
+base32.  The version is always 3 (or 'd' in base32), thus they always end in
+'d'.</p>
+
+<p>For more information, see the v3 onion <a href='https://gitweb.torproject.org/torspec.git/tree/rend-spec-v3.txt#n2012'>spec</a>.
+This links directly to the right section as of the time of writing. Look for
+"<code>Encoding onion addresses [ONIONADDRESS]</code>".</p>
 
 <h3>Has anybody actually asked you any of these questions?</h3>
 <p>I don't think so.</p>
