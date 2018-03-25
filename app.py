@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 BASE32_CHARS = list('abcdefghijklmnopqrstuvwxyz234567')
 PAGE_LENGTH = 128
-NUM_ONIONS = 32**16, 2**(32*8)
+NUM_ONIONS = 32**16, 2**((32*8)-4)
 
 app.debug = False
 app.jinja_env.globals.update({
@@ -53,6 +53,10 @@ class V3Onion:
 
     @staticmethod
     def int_to_onion_addr(num):
+        num_str = str(bin(num))[2:]
+        num_str = ((32*8)-4-len(num_str)) * '0' + num_str
+        num_str = num_str[0] + '1' + num_str[1:] + '000'
+        num = int(num_str, 2)
         master = num.to_bytes(32, byteorder='big')
         signing_key = ed25519.SigningKey(master)
         verifying_key = signing_key.get_verifying_key().to_bytes()
