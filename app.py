@@ -2,6 +2,10 @@
 import random
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request
+import sys
+import hashlib
+if sys.version_info < (3, 6):
+    import sha3  # pysha3
 from hashlib import sha3_256
 import base64
 import ed25519
